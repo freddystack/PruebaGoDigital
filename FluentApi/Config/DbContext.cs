@@ -1,4 +1,5 @@
 ﻿using FluentApi.Models;
+using FluentApi.Seeders;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,11 @@ namespace FluentApi.Config
 
         public DbModelContext(DbContextOptions<DbModelContext> options) : base(options) {}
 
-        protected override void OnModelCreating(ModelBuilder bulder)
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
-            new ProductConfiguration(bulder.Entity<Product>());
-            base.OnModelCreating(bulder);
+            new ProductConfiguration(modelbuilder.Entity<Product>());
+            modelbuilder.Seed();
+            base.OnModelCreating(modelbuilder);
         }
 
     }
