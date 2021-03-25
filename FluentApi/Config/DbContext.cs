@@ -13,5 +13,11 @@ namespace FluentApi.Config
 
         public DbModelContext(DbContextOptions<DbModelContext> options) : base(options) {}
 
+        protected override void OnModelCreating(ModelBuilder bulder)
+        {
+            new ProductConfiguration(bulder.Entity<Product>());
+            base.OnModelCreating(bulder);
+        }
+
     }
 }
