@@ -27,6 +27,17 @@ namespace FluentApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+             services.AddCors(options =>
+            {
+                options.AddPolicy("AllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyHeader()
+                               .AllowAnyOrigin()
+                               .AllowAnyMethod();
+                    });
+            });
 
 
             var connection = @"Server=DESKTOP-TQTM1RJ;Database=GODIGITAL01;Trusted_Connection=True;ConnectRetryCount=0";
@@ -44,7 +55,7 @@ namespace FluentApi
             {
                 app.UseHsts();
             }
-
+            app.UseCors("AllOrigins");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
